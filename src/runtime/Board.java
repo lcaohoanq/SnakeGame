@@ -137,9 +137,9 @@ public class Board extends JPanel implements ActionListener {
 
             dots++;
             locateApple();
-            System.out.println("Dot = " +dots);
-            System.out.println("x[0] = " +x[0]);
-            System.out.println("y[0] = " +y[0]);
+//            System.out.println("Dot = " +dots);
+//            System.out.println("x[0] = " +x[0]);
+//            System.out.println("y[0] = " +y[0]);
             
         }
     }
