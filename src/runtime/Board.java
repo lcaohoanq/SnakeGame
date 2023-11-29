@@ -15,6 +15,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -140,7 +144,7 @@ public class Board extends JPanel implements ActionListener {
 //            System.out.println("Dot = " +dots);
 //            System.out.println("x[0] = " +x[0]);
 //            System.out.println("y[0] = " +y[0]);
-            
+            playAudio("src/resources/eating.wav");
         }
     }
 
@@ -194,6 +198,7 @@ public class Board extends JPanel implements ActionListener {
         }
         
         if (!inGame) {
+            playAudio("src/resources/gameover.wav");
             timer.stop();
         }
     }
@@ -207,6 +212,20 @@ public class Board extends JPanel implements ActionListener {
         apple_y = ((r * DOT_SIZE));
     }
 
+    public void playAudio(String filepath){
+        try{
+            //load audio file
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile());
+            //get clip
+            Clip clip = AudioSystem.getClip();
+            //open audioInputStream to the clip
+            clip.open(audioInputStream);
+            //start the audio clip
+            clip.start();
+        }catch (Exception e){
+            System.out.println("Audio file not found" +filepath);
+        }
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
 
