@@ -30,11 +30,12 @@ public class Board extends JPanel implements ActionListener {
     private final int DOT_SIZE = 10;
     private final int ALL_DOTS = 900;
     private final int RAND_POS = 29;
-    private final int DELAY = 50;
+    private int DELAY = 50;
 
     private final int x[] = new int[ALL_DOTS];
     private final int y[] = new int[ALL_DOTS];
 
+    private int score = 0;
     private int dots;
     private int apple_x;
     private int apple_y;
@@ -43,7 +44,7 @@ public class Board extends JPanel implements ActionListener {
     private boolean rightDirection = true;
     private boolean upDirection = false;
     private boolean downDirection = false;
-    private boolean inGame = true;
+    public static boolean inGame = true;
 
     private Timer timer;
     private Image ball;
@@ -51,10 +52,9 @@ public class Board extends JPanel implements ActionListener {
     private Image head;
 
     public Board() {
-        
         initBoard();
     }
-    
+
     private void initBoard() {
 
         addKeyListener(new TAdapter());
@@ -86,12 +86,10 @@ public class Board extends JPanel implements ActionListener {
             x[z] = 50 - z * 10;
             y[z] = 50;
         }
-        
+
         locateApple();
         timer = new Timer(DELAY, this);
-//        if (downDirection || upDirection || rightDirection || leftDirection) {
-//            
-//        }
+        System.out.println(DELAY);
         timer.start();
     }
 
@@ -101,9 +99,9 @@ public class Board extends JPanel implements ActionListener {
 
         doDrawing(g);
     }
-    
+
     private void doDrawing(Graphics g) {
-        
+
         if (inGame) {
 
             g.drawImage(apple, apple_x, apple_y, this);
@@ -121,12 +119,12 @@ public class Board extends JPanel implements ActionListener {
         } else {
 
             gameOver(g);
-        }        
+        }
     }
 
     private void gameOver(Graphics g) {
-        
-        String msg = "Game Over";
+
+        String msg = "Game Over " + "\n" + " Your score is " + score;
         Font small = new Font("Helvetica", Font.BOLD, 14);
         FontMetrics metr = getFontMetrics(small);
 
@@ -138,14 +136,21 @@ public class Board extends JPanel implements ActionListener {
     private void checkApple() {
 
         if ((x[0] == apple_x) && (y[0] == apple_y)) {
+//            System.out.println("eat!");
 
             dots++;
+            checkScore();
             locateApple();
-//            System.out.println("Dot = " +dots);
-//            System.out.println("x[0] = " +x[0]);
-//            System.out.println("y[0] = " +y[0]);
-            playAudio("src/resources/eating.wav");
+
+            // System.out.println("Dot = " +dots);
+            // System.out.println("x[0] = " +x[0]);
+            // System.out.println("y[0] = " +y[0]);
+//            playAudio("src/resources/eating.wav");
         }
+    }
+
+    private void checkScore(){
+        score++;
     }
 
     private void move() {
@@ -182,21 +187,28 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (y[0] >= B_HEIGHT) {
-            y[0] = 1;
+            y[0] = 0;
+            // why y[0] = 0; not y[0] = 1; ?
+            //
+
+            System.out.println(inGame);
         }
 
         if (y[0] < 0) {
-            y[0] = B_HEIGHT-1;
+            y[0] = B_HEIGHT - DOT_SIZE;
+            System.out.println(inGame);
         }
 
         if (x[0] >= B_WIDTH) {
-            x[0] = 1;
+            x[0] = 0;
+            System.out.println(inGame);
         }
 
         if (x[0] < 0) {
-            x[0] = B_WIDTH-1;
+            x[0] = B_WIDTH - DOT_SIZE;
+            System.out.println(inGame);
         }
-        
+
         if (!inGame) {
             playAudio("src/resources/gameover.wav");
             timer.stop();
@@ -212,20 +224,21 @@ public class Board extends JPanel implements ActionListener {
         apple_y = ((r * DOT_SIZE));
     }
 
-    public void playAudio(String filepath){
-        try{
-            //load audio file
+    public static void playAudio(String filepath) {
+        try {
+            // load audio file
             AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filepath).getAbsoluteFile());
-            //get clip
+            // get clip
             Clip clip = AudioSystem.getClip();
-            //open audioInputStream to the clip
+            // open audioInputStream to the clip
             clip.open(audioInputStream);
-            //start the audio clip
+            // start the audio clip
             clip.start();
-        }catch (Exception e){
-            System.out.println("Audio file not found" +filepath);
+        } catch (Exception e) {
+            System.out.println("Audio file not found" + filepath);
         }
     }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -272,4 +285,3 @@ public class Board extends JPanel implements ActionListener {
         }
     }
 }
-
