@@ -1,7 +1,7 @@
 # Select option
 ![Screenshot 2023-12-24 222432](https://github.com/lcaohoanq/SnakeGame/assets/136492579/4f7090b3-ea93-4e9e-bd60-a1c75a80973b)
 # Login
-![Screenshot 2023-12-24 222502](https://github.com/lcaohoanq/SnakeGame/assets/136492579/2b9874ce-5b79-4b74-8116-e5fa09d04545)
+![Screenshot 2023-12-24 232219](https://github.com/lcaohoanq/SnakeGame/assets/136492579/c1ab2a2e-a947-4977-987d-ed1893c4c756)
 # Register
 ![Screenshot 2023-12-24 222522](https://github.com/lcaohoanq/SnakeGame/assets/136492579/7be761e9-a5d3-4c5d-a28d-1f2681e104cc)
 # Playing
